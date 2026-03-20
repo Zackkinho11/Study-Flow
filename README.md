@@ -65,3 +65,6 @@ O projeto visa integrar compromissos recebidos por e-mail, utilizando identifica
 * **Carlos Eduardo Abreu da Silva**
 * **Email:** <d2022004556@unifei.edu.br>
 * **GitHub:** [@CarloseduASilva](https://github.com/CarloseduASilva)
+* **Vítor Hugo Rodrigues Basílio**
+* **Email:** <d2023011321@unifei.edu.br>
+* **GitHub:** [@Zackkinho11](https://https://github.com/Zackkinho11)
