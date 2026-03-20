@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <div align="center">
-  <img src="Logo.jpeg" alt="logo" width="140" height="auto" />
+  <img src="Logo_semfundo.png" alt="logo" width="140" height="auto" />
   <br/>
   <h3><b>Study Flow</b></h3>
 </div>
