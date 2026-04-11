@@ -68,3 +68,6 @@ O projeto visa integrar compromissos recebidos por e-mail, utilizando identifica
 * **Vítor Hugo Rodrigues Basílio**
 * **Email:** <d2023011321@unifei.edu.br>
 * **GitHub:** [@Zackkinho11](https://https://github.com/Zackkinho11)
+* **Beatriz Coelho Pereira**
+* **Email:** <d2022010992@unifei.edu.br>
+* **GitHub:** [@BiaCodess](https://github.com/BiaCodess)
