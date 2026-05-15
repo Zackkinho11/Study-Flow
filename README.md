@@ -62,12 +62,18 @@ O projeto visa integrar compromissos recebidos por e-mail, utilizando identifica
 
 ## 👥 Authors <a name="authors"></a>
 
-* **Carlos Eduardo Abreu da Silva**
-* **Email:** <d2022004556@unifei.edu.br>
-* **GitHub:** [@CarloseduASilva](https://github.com/CarloseduASilva)
-* **Vítor Hugo Rodrigues Basílio**
-* **Email:** <d2023011321@unifei.edu.br>
-* **GitHub:** [@Zackkinho11](https://https://github.com/Zackkinho11)
 * **Beatriz Coelho Pereira**
 * **Email:** <d2022010992@unifei.edu.br>
 * **GitHub:** [@BiaCodess](https://github.com/BiaCodess)
+* **Breno Vítor de Paula**
+* **Email:** <anonymoustp44@gmail.com>
+* **GitHub:** [@Juuzou0012](https://github.com/Juuzou0012)
+* **Carlos Eduardo Abreu da Silva**
+* **Email:** <d2022004556@unifei.edu.br>
+* **GitHub:** [@CarloseduASilva](https://github.com/CarloseduASilva)
+* **Lucas Luz Souza Pires**
+* **Email:** <d2022003076@unifei.edu.br>
+* **GitHub:** [@Lucass654](https://github.com/Lucass654)
+* **Vítor Hugo Rodrigues Basílio***
+* **Email:** <d2023011321@unifei.edu.br>
+* **GitHub:** [@Zackkinho11](https://https://github.com/Zackkinho11)
