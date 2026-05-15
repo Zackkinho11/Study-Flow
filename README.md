@@ -74,6 +74,6 @@ O projeto visa integrar compromissos recebidos por e-mail, utilizando identifica
 * **Lucas Luz Souza Pires**
 * **Email:** <d2022003076@unifei.edu.br>
 * **GitHub:** [@Lucass654](https://github.com/Lucass654)
-* **Vítor Hugo Rodrigues Basílio***
+* **Vítor Hugo Rodrigues Basílio**
 * **Email:** <d2023011321@unifei.edu.br>
 * **GitHub:** [@Zackkinho11](https://https://github.com/Zackkinho11)
