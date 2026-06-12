@@ -6,6 +6,13 @@ import { useRouter } from "next/navigation";
 import { useCallback, useState, useEffect } from "react";
 import { Eye, EyeOff, AlertCircle } from "lucide-react";
 
+interface RegisteredUser {
+  nome: string;
+  username: string;
+  email: string;
+  senha?: string;
+}
+
 const Login: NextPage = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -33,7 +40,7 @@ const Login: NextPage = () => {
 
     // Busca usuários cadastrados no localStorage
     const usersJson = localStorage.getItem("studyflow_users");
-    let users = usersJson ? JSON.parse(usersJson) : [];
+    const users: RegisteredUser[] = usersJson ? JSON.parse(usersJson) : [];
 
     // Seed padrão caso não existam usuários
     if (users.length === 0) {
@@ -49,7 +56,7 @@ const Login: NextPage = () => {
 
     // Procura o usuário correspondente
     const user = users.find(
-      (u: any) => u.email.toLowerCase() === email.toLowerCase() && u.senha === senha
+      (u) => u.email.toLowerCase() === email.toLowerCase() && u.senha === senha
     );
 
     if (user) {

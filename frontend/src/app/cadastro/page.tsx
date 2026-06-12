@@ -6,6 +6,13 @@ import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { Eye, EyeOff, AlertCircle, Check } from "lucide-react";
 
+interface RegisteredUser {
+  nome: string;
+  username: string;
+  email: string;
+  senha?: string;
+}
+
 const Cadastro: NextPage = () => {
   const router = useRouter();
   const [nome, setNome] = useState("");
@@ -43,14 +50,14 @@ const Cadastro: NextPage = () => {
 
       // Buscar usuários atuais no localStorage
       const usersJson = localStorage.getItem("studyflow_users");
-      const users = usersJson ? JSON.parse(usersJson) : [];
+      const users: RegisteredUser[] = usersJson ? JSON.parse(usersJson) : [];
 
       // Validar se o e-mail ou username já existe
       const emailExists = users.some(
-        (u: any) => u.email.toLowerCase() === email.toLowerCase()
+        (u) => u.email.toLowerCase() === email.toLowerCase()
       );
       const usernameExists = users.some(
-        (u: any) => u.username.toLowerCase() === username.toLowerCase()
+        (u) => u.username.toLowerCase() === username.toLowerCase()
       );
 
       if (emailExists) {

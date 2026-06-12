@@ -2,7 +2,7 @@
 
 import type { NextPage } from "next";
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   LayoutDashboard,
   Calendar,
@@ -64,7 +64,10 @@ const TimerDashboard: NextPage = () => {
     if (!session) {
       router.push("/");
     } else {
-      setUser(JSON.parse(session));
+      const parsed = JSON.parse(session);
+      setTimeout(() => {
+        setUser(parsed);
+      }, 0);
     }
   }, [router]);
 
@@ -72,7 +75,9 @@ const TimerDashboard: NextPage = () => {
   useEffect(() => {
     if (user && selectedDiscipline) {
       const storedNotes = localStorage.getItem(`studyflow_notes_${user.email}_${selectedDiscipline}`);
-      setNotes(storedNotes || "");
+      setTimeout(() => {
+        setNotes(storedNotes || "");
+      }, 0);
     }
   }, [user, selectedDiscipline]);
 
