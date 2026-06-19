@@ -30,7 +30,7 @@ interface UserSession {
 const TimerDashboard: NextPage = () => {
   const router = useRouter();
   const [user, setUser] = useState<UserSession | null>(null);
-  const [activeTab, setActiveTab] = useState<string>("Timer");
+  const activeTab = "Timer";
   
   // Perfil e Notificações dropdowns
   const [showProfile, setShowProfile] = useState(false);
@@ -178,13 +178,13 @@ const TimerDashboard: NextPage = () => {
 
   // Renderizador da Barra Lateral (Sidebar)
   const menuItems = [
-    { name: "Dashboard", icon: LayoutDashboard },
-    { name: "Calendário", icon: Calendar },
-    { name: "Atividade", icon: Activity },
-    { name: "Disciplinas", icon: BookOpen },
-    { name: "Timer", icon: TimerIcon },
-    { name: "Estatísticas", icon: BarChart3 },
-    { name: "Configurações", icon: Settings },
+    { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+    { name: "Calendário", href: "/calendario", icon: Calendar },
+    { name: "Atividade", href: "/atividade", icon: Activity },
+    { name: "Disciplinas", href: "/disciplinas", icon: BookOpen },
+    { name: "Timer", href: "/timer", icon: TimerIcon },
+    { name: "Estatísticas", href: "/estatisticas", icon: BarChart3 },
+    { name: "Configurações", href: "/configuracoes", icon: Settings },
   ];
 
   if (!user) {
@@ -215,7 +215,7 @@ const TimerDashboard: NextPage = () => {
               return (
                 <button
                   key={item.name}
-                  onClick={() => setActiveTab(item.name)}
+                  onClick={() => router.push(item.href)}
                   className={`w-full flex items-center gap-3 py-3 px-4 rounded-[15px] text-base font-medium transition duration-200 cursor-pointer ${
                     isActive
                       ? "bg-white text-[#29645e] shadow-md scale-[1.02]"
