@@ -1,0 +1,10 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src"],
+  "entryPointStrategy": "expand",
+  "out": "docs-dist",
+  "tsconfig": "tsconfig.json",
+  "name": "Study Flow - Documentação Técnica",
+  "includeVersion": true,
+  "readme": "README.md"
+}

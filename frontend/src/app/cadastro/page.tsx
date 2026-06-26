@@ -1,3 +1,10 @@
+/**
+ * Página de Cadastro de novos usuários no aplicativo Study Flow.
+ * Esta tela valida as informações fornecidas, verifica a unicidade do e-mail/username
+ * no localStorage e persiste o novo cadastro.
+ * @packageDocumentation
+ */
+
 "use client";
 
 import type { NextPage } from "next";
@@ -6,27 +13,63 @@ import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { Eye, EyeOff, AlertCircle, Check } from "lucide-react";
 
+/**
+ * Interface que representa a estrutura de um usuário registrado no sistema.
+ */
 interface RegisteredUser {
+  /** Nome completo do usuário */
   nome: string;
+  /** Nome de usuário/apelido único no sistema */
   username: string;
+  /** Endereço de e-mail único do usuário */
   email: string;
+  /** Senha criptografada/plana de acesso */
   senha?: string;
 }
 
+/**
+ * Componente da página de Cadastro.
+ * Gerencia a entrada de dados (nome, username, email, senha e confirmação de senha),
+ * validações de igualdade e tamanho de senha, e tratamento de mensagens de sucesso/erro.
+ */
 const Cadastro: NextPage = () => {
   const router = useRouter();
+
+  /** Estado do campo de entrada de Nome Completo */
   const [nome, setNome] = useState("");
+
+  /** Estado do campo de entrada de Nome de Usuário */
   const [username, setUsername] = useState("");
+
+  /** Estado do campo de entrada de E-mail */
   const [email, setEmail] = useState("");
+
+  /** Estado do campo de entrada de Senha */
   const [senha, setSenha] = useState("");
+
+  /** Estado do campo de entrada de Confirmação de Senha */
   const [confirmarSenha, setConfirmarSenha] = useState("");
 
+  /** Estado para controlar a visibilidade da senha (exibir/ocultar) */
   const [showSenha, setShowSenha] = useState(false);
+
+  /** Estado para controlar a visibilidade do campo de confirmação de senha */
   const [showConfirmarSenha, setShowConfirmarSenha] = useState(false);
 
+  /** Estado para armazenar mensagens de erro de validação ou cadastro */
   const [errorMsg, setErrorMsg] = useState("");
+
+  /** Estado para armazenar mensagens de sucesso após cadastro bem-sucedido */
   const [successMsg, setSuccessMsg] = useState("");
 
+  /**
+   * Executa o fluxo de registro do usuário.
+   * Valida se todos os campos estão preenchidos, se as senhas coincidem, se possuem tamanho mínimo,
+   * e se o e-mail ou username já estão cadastrados no localStorage.
+   * Em caso de sucesso, adiciona o novo registro ao banco local simulado (localStorage) e redireciona para a tela de login.
+   *
+   * @param e - Evento de envio do formulário React
+   */
   const handleRegister = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
@@ -234,3 +277,4 @@ const Cadastro: NextPage = () => {
 };
 
 export default Cadastro;
+

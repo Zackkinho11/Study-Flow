@@ -1,3 +1,10 @@
+/**
+ * Página de Login do aplicativo Study Flow.
+ * Esta tela permite a autenticação de usuários cadastrados no localStorage
+ * e realiza o redirecionamento automático caso já exista uma sessão ativa.
+ * @packageDocumentation
+ */
+
 "use client";
 
 import type { NextPage } from "next";
@@ -6,22 +13,47 @@ import { useRouter } from "next/navigation";
 import { useCallback, useState, useEffect } from "react";
 import { Eye, EyeOff, AlertCircle } from "lucide-react";
 
+/**
+ * Interface que representa a estrutura de um usuário registrado.
+ */
 interface RegisteredUser {
+  /** Nome completo do usuário */
   nome: string;
+  /** Nome de usuário/apelido único */
   username: string;
+  /** Endereço de e-mail utilizado no login */
   email: string;
+  /** Senha de acesso do usuário (opcional na busca do localStorage) */
   senha?: string;
 }
 
+/**
+ * Componente da página de Login.
+ * Gerencia o formulário de credenciais, tratamento de erros, lembrança de sessão
+ * e redirecionamento para o dashboard/timer.
+ */
 const Login: NextPage = () => {
   const router = useRouter();
+
+  /** Estado do campo de entrada do e-mail */
   const [email, setEmail] = useState("");
+
+  /** Estado do campo de entrada da senha */
   const [senha, setSenha] = useState("");
+
+  /** Estado para controlar a visibilidade da senha (exibir/ocultar texto) */
   const [showSenha, setShowSenha] = useState(false);
+
+  /** Estado do checkbox "Me manter conectado" para estender a sessão */
   const [rememberMe, setRememberMe] = useState(false);
+
+  /** Estado indicador de erro de autenticação (credenciais inválidas ou campos vazios) */
   const [error, setError] = useState(false);
 
-  // Redireciona se já estiver logado (sessão simples)
+  /**
+   * Efeito de inicialização para verificar se o usuário já possui uma sessão ativa.
+   * Caso sim, redireciona-o automaticamente para a tela do Timer.
+   */
   useEffect(() => {
     const session = localStorage.getItem("studyflow_session");
     if (session) {
@@ -29,6 +61,14 @@ const Login: NextPage = () => {
     }
   }, [router]);
 
+  /**
+   * Trata o envio do formulário de login.
+   * Valida se os campos estão preenchidos, verifica as credenciais cadastradas no localStorage
+   * (incluindo uma conta padrão "admin" como seed se não houver usuários cadastrados)
+   * e, em caso de sucesso, salva os dados da sessão no localStorage e redireciona para a tela do Timer.
+   *
+   * @param e - Evento de envio do formulário React
+   */
   const handleLogin = useCallback((e: React.FormEvent) => {
     e.preventDefault();
     setError(false);
@@ -78,6 +118,9 @@ const Login: NextPage = () => {
     }
   }, [email, senha, rememberMe, router]);
 
+  /**
+   * Navega para a página de cadastro de novas contas.
+   */
   const navigateToCadastro = useCallback(() => {
     router.push("/cadastro");
   }, [router]);
@@ -211,3 +254,4 @@ const Login: NextPage = () => {
 };
 
 export default Login;
+

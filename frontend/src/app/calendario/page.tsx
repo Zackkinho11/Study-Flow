@@ -1,3 +1,11 @@
+/**
+ * Página do Calendário Acadêmico do aplicativo Study Flow.
+ * Esta tela exibe uma grade mensal (Junho de 2026), lista os compromissos
+ * associados ao dia selecionado e permite criar, visualizar e deletar eventos
+ * (Provas, Trabalhos e Estudos), persistindo os dados no localStorage do usuário.
+ * @packageDocumentation
+ */
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -21,20 +29,37 @@ import {
   Info
 } from "lucide-react";
 
+/**
+ * Representa a sessão ativa do usuário autenticado no sistema.
+ */
 type UserSession = {
+  /** Endereço de e-mail do usuário logado */
   email: string;
+  /** Nome completo do usuário */
   nome: string;
+  /** Nome de usuário/apelido único do usuário */
   username: string;
 };
 
+/**
+ * Representa a estrutura de um evento registrado no calendário.
+ */
 type CalendarEvent = {
+  /** Identificador único do evento (normalmente timestamp gerado pelo Date.now()) */
   id: string;
+  /** Título ou descrição resumida do compromisso */
   title: string;
-  date: string; // YYYY-MM-DD
+  /** Data do evento no formato ISO 'YYYY-MM-DD' */
+  date: string;
+  /** Nome da disciplina acadêmica relacionada ao evento */
   discipline: string;
+  /** Tipo do evento para categorização e estilo visual */
   type: "Prova" | "Trabalho" | "Estudo";
 };
 
+/**
+ * Lista de itens de navegação do menu lateral (Sidebar).
+ */
 const menuItems = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Calendário", href: "/calendario", icon: CalendarIcon },
@@ -45,6 +70,9 @@ const menuItems = [
   { name: "Configurações", href: "/configuracoes", icon: Settings },
 ];
 
+/**
+ * Lista de disciplinas pré-cadastradas para seleção ao criar compromissos.
+ */
 const disciplinesList = [
   "Banco de Dados",
   "Algoritmos",
@@ -53,21 +81,46 @@ const disciplinesList = [
   "Sistemas Operacionais"
 ];
 
+/**
+ * Componente principal da página de Calendário.
+ * Renderiza o painel de gerenciamento de compromissos acadêmicos mensais e diários.
+ */
 export default function CalendarioPage() {
   const router = useRouter();
+
+  /** Sessão do usuário logado ou null se não autenticado */
   const [user, setUser] = useState<UserSession | null>(null);
+
+  /** Controla a exibição da gaveta de notificações rápidas */
   const [showNotifications, setShowNotifications] = useState(false);
+
+  /** Controla a exibição do tooltip/modal de detalhes de perfil */
   const [showProfile, setShowProfile] = useState(false);
 
-  // Estados do Calendário
+  /** Lista completa de eventos carregados do usuário atual */
   const [events, setEvents] = useState<CalendarEvent[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string>("2026-06-19"); // Dia corrente padrão
+
+  /** Data atualmente selecionada no calendário (padrão '2026-06-19') */
+  const [selectedDate, setSelectedDate] = useState<string>("2026-06-19");
+
+  /** Título para o novo evento a ser criado no formulário */
   const [newEventTitle, setNewEventTitle] = useState("");
+
+  /** Disciplina selecionada para o novo evento no formulário */
   const [newEventDiscipline, setNewEventDiscipline] = useState(disciplinesList[0]);
+
+  /** Tipo do novo evento selecionado no formulário */
   const [newEventType, setNewEventType] = useState<"Prova" | "Trabalho" | "Estudo">("Prova");
+
+  /** Controla a exibição do formulário de adição rápida de eventos */
   const [showAddModal, setShowAddModal] = useState(false);
 
-  // Carrega a sessão e eventos
+  /**
+   * Efeito executado ao montar o componente.
+   * Verifica a autenticação do usuário. Se válido, carrega os dados de sessão
+   * e busca os eventos persistidos no localStorage correspondentes ao e-mail do usuário.
+   * Caso contrário, redireciona para a página de login.
+   */
   useEffect(() => {
     const storedSession = localStorage.getItem("studyflow_session");
 
@@ -126,6 +179,11 @@ export default function CalendarioPage() {
     }
   }, [router]);
 
+  /**
+   * Atualiza a lista de eventos no estado local e os persiste no localStorage.
+   *
+   * @param updatedEvents - Nova lista completa de eventos
+   */
   const saveEvents = (updatedEvents: CalendarEvent[]) => {
     setEvents(updatedEvents);
     if (user) {
@@ -133,6 +191,12 @@ export default function CalendarioPage() {
     }
   };
 
+  /**
+   * Lida com o fluxo de submissão do formulário para adicionar um novo compromisso.
+   * Cria um objeto {@link CalendarEvent} com dados preenchidos, anexa à lista e persiste.
+   *
+   * @param e - Evento de envio do formulário React
+   */
   const handleAddEvent = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newEventTitle.trim()) return;
@@ -151,11 +215,20 @@ export default function CalendarioPage() {
     setShowAddModal(false);
   };
 
+  /**
+   * Deleta um evento do calendário a partir de seu identificador único.
+   * Filtra a lista para remover o item correspondente e atualiza a persistência.
+   *
+   * @param id - Identificador único do evento a ser deletado
+   */
   const handleDeleteEvent = (id: string) => {
     const updatedEvents = events.filter((e) => e.id !== id);
     saveEvents(updatedEvents);
   };
 
+  /**
+   * Encerra a sessão ativa do usuário limpando o localStorage e redireciona para a tela de login.
+   */
   const logout = () => {
     localStorage.removeItem("studyflow_session");
     router.push("/");
@@ -533,3 +606,4 @@ export default function CalendarioPage() {
     </div>
   );
 }
+

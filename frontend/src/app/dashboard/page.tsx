@@ -1,3 +1,11 @@
+/**
+ * Página do Dashboard Principal do aplicativo Study Flow.
+ * Esta tela serve como o centro de controle do usuário, apresentando
+ * resumos das horas estudadas, metas de estudo por disciplina, sequência de dias ativos
+ * e uma lista interativa de tarefas e prazos acadêmicos integrados com o localStorage.
+ * @packageDocumentation
+ */
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -24,20 +32,37 @@ import {
   Sparkles
 } from "lucide-react";
 
+/**
+ * Representa os dados da sessão do usuário autenticado no sistema.
+ */
 type UserSession = {
+  /** Endereço de e-mail do usuário logado */
   email: string;
+  /** Nome completo do usuário */
   nome: string;
+  /** Nome de usuário/apelido único do usuário */
   username: string;
 };
 
+/**
+ * Representa a estrutura de uma tarefa/entrega cadastrada pelo usuário.
+ */
 type Task = {
+  /** Identificador único da tarefa (gerado dinamicamente) */
   id: string;
+  /** Título ou descrição da entrega */
   title: string;
+  /** Disciplina acadêmica relacionada à tarefa */
   discipline: string;
+  /** Data limite para a entrega (formato YYYY-MM-DD) */
   dueDate: string;
+  /** Estado de conclusão da tarefa */
   completed: boolean;
 };
 
+/**
+ * Lista de itens de navegação do menu lateral (Sidebar).
+ */
 const menuItems = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Calendário", href: "/calendario", icon: CalendarIcon },
@@ -48,6 +73,9 @@ const menuItems = [
   { name: "Configurações", href: "/configuracoes", icon: Settings },
 ];
 
+/**
+ * Lista de disciplinas cadastradas no sistema.
+ */
 const disciplinesList = [
   "Banco de Dados",
   "Algoritmos",
@@ -56,21 +84,48 @@ const disciplinesList = [
   "Sistemas Operacionais"
 ];
 
+/**
+ * Componente principal da página do Dashboard.
+ * Gerencia a renderização de cartões de métricas, carregamento de histórico de foco,
+ * e a lista interativa de tarefas (to-do list) acadêmicas.
+ */
 export default function DashboardPage() {
   const router = useRouter();
+
+  /** Dados do usuário logado */
   const [user, setUser] = useState<UserSession | null>(null);
+
+  /** Controla a visibilidade da gaveta de notificações rápidas */
   const [showNotifications, setShowNotifications] = useState(false);
+
+  /** Controla a visibilidade do tooltip de perfil */
   const [showProfile, setShowProfile] = useState(false);
 
   // Estados do Dashboard
+  /** Lista completa de tarefas carregadas do usuário atual */
   const [tasks, setTasks] = useState<Task[]>([]);
+
+  /** Título para a nova tarefa a ser criada no formulário */
   const [newTaskTitle, setNewTaskTitle] = useState("");
+
+  /** Disciplina selecionada para a nova tarefa no formulário */
   const [newTaskDiscipline, setNewTaskDiscipline] = useState(disciplinesList[0]);
+
+  /** Data de vencimento selecionada para a nova tarefa no formulário */
   const [newTaskDueDate, setNewTaskDueDate] = useState("");
+
+  /** Quantidade total acumulada de horas de foco */
   const [focusHours, setFocusHours] = useState(12.5);
+
+  /** Dias consecutivos de estudos ativos */
   const [streakDays] = useState(5);
 
-  // Carrega a sessão e os dados de tarefas do localStorage
+  /**
+   * Efeito executado na montagem do componente.
+   * Verifica a autenticação do usuário. Em caso de sucesso, carrega os dados da sessão,
+   * a lista de tarefas acadêmicas no localStorage e calcula as horas de foco totais
+   * a partir do histórico de atividades reais finalizadas.
+   */
   useEffect(() => {
     const storedSession = localStorage.getItem("studyflow_session");
 
@@ -133,7 +188,11 @@ export default function DashboardPage() {
     }
   }, [router]);
 
-  // Salva tarefas sempre que a lista muda
+  /**
+   * Atualiza a lista de tarefas no estado local e as persiste no localStorage.
+   *
+   * @param updatedTasks - Nova lista completa de tarefas
+   */
   const saveTasks = (updatedTasks: Task[]) => {
     setTasks(updatedTasks);
     if (user) {
@@ -141,7 +200,11 @@ export default function DashboardPage() {
     }
   };
 
-  // Cadastra nova tarefa
+  /**
+   * Adiciona uma nova tarefa acadêmica à lista com base nos inputs do formulário.
+   *
+   * @param e - Evento de envio de formulário do React
+   */
   const handleAddTask = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newTaskTitle.trim() || !newTaskDueDate) return;
@@ -160,7 +223,11 @@ export default function DashboardPage() {
     setNewTaskDueDate("");
   };
 
-  // Alterna status de conclusão da tarefa
+  /**
+   * Alterna o estado de conclusão (`completed`) de uma tarefa específica.
+   *
+   * @param id - Identificador único da tarefa a ser alterada
+   */
   const handleToggleTask = (id: string) => {
     const updatedTasks = tasks.map((task) =>
       task.id === id ? { ...task, completed: !task.completed } : task
@@ -168,7 +235,11 @@ export default function DashboardPage() {
     saveTasks(updatedTasks);
   };
 
-  // Exclui tarefa
+  /**
+   * Exclui uma tarefa específica da lista.
+   *
+   * @param id - Identificador único da tarefa a ser removida
+   */
   const handleDeleteTask = (id: string) => {
     const updatedTasks = tasks.filter((task) => task.id !== id);
     saveTasks(updatedTasks);
